@@ -1,0 +1,13 @@
+__pycache__/
+__/
+__*
+test/
+test*
+*.bat
+response*
+*.txt
+!requirements.txt
+!edu_xlsx/*.py
+*.egg-info
+build/
+dist/
