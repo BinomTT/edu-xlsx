@@ -13,7 +13,7 @@ Library's main idea - integrate output .JSON files to use in [BinomTTBot](https:
 
 ### Setup
 Install this library with command:
-`python -m pip install -U git+https://github.com/arynyklas/edu-xlsx.git`
+`python -m pip install -U git+https://github.com/BinomTT/edu-xlsx.git`
 
 
 ### Use examples
