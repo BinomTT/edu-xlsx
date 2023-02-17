@@ -4,7 +4,7 @@ from openpyxl.workbook.workbook import Workbook
 from openpyxl.worksheet.worksheet import Worksheet
 from openpyxl.utils.cell import _STRING_COL_CACHE
 from itertools import chain as itertools_chain
-from json import dump
+from json import dumps as json_dumps
 
 from .models import Class, Subject, Classroom, Teacher, Group, Lesson, Card
 from .utils import build_ids, build_groups, get_short_first_chars, parse_classroom_names, parse_coordinate_ord
@@ -64,6 +64,8 @@ class XLSXParser:
         self._sheet_max_row: int = self._sheet.max_row
         self._sheet_max_column: int = self._sheet.max_column
         self._sheet_max_column_letters: str = _STRING_COL_CACHE[self._sheet_max_column]
+
+        self.encoding: str = "utf-8"
 
     def parse(self) -> None:
         i: int
@@ -465,10 +467,11 @@ class XLSXParser:
             }
         }
 
-        with open(json_filepath, "w", encoding="utf-8") as file:
-            dump(
+        json_filepath.write_text(
+            data = json_dumps(
                 obj = timetable_dict,
-                fp = file,
                 ensure_ascii = False,
                 indent = json_indent
-            )
+            ),
+            encoding = self.encoding
+        )
