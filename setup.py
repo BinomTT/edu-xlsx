@@ -1,7 +1,6 @@
 from pathlib import Path
-from re import findall as re_findall, M as ReM
-
 from setuptools import setup, find_packages
+from re import findall as re_findall, M as ReM
 
 import sys
 

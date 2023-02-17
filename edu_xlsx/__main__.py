@@ -14,7 +14,7 @@ arguments.input = Path(arguments.input)
 
 
 print(
-    "Parsing from {xlsx_filepath}...".format(
+    "Parsing from \"{xlsx_filepath}\" ...".format(
         xlsx_filepath = arguments.input.resolve()
     )
 )
@@ -32,7 +32,7 @@ xlsx_parser.save(
 )
 
 print(
-    "Successfully saved to {json_filepath}!".format(
+    "Successfully saved to \"{json_filepath}\"!".format(
         json_filepath = Path(arguments.output).resolve()
     )
 )
