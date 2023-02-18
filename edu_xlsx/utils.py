@@ -2,7 +2,7 @@ from re import Pattern as RePattern, compile as regex_compile
 from itertools import chain as itertools_chain
 from random import randint
 
-from typing import List, Tuple, Any, Dict
+from typing import List, Dict, Tuple, Any, Optional
 
 
 digit_6_re: RePattern = regex_compile(r"^\d{6}$")
@@ -132,7 +132,7 @@ def chunker(collection: List[Any], count: int) -> List[List[Any]]:
     ]
 
 
-def parse_classroom_names(classroom_names_str: str, classrooms_from_name: Dict[str, Any]) -> List[str]: # TODO: replace `Any` with `models.Class`
+def parse_classroom_names(classroom_names_str: str, classrooms_from_name: Optional[Dict[str, Any]]=None) -> List[str]: # TODO: replace `Any` with `models.Class`
     if digit_6_re.match(
         string = classroom_names_str
     ):
@@ -148,7 +148,7 @@ def parse_classroom_names(classroom_names_str: str, classrooms_from_name: Dict[s
     for classroom_name in classroom_names_str.split(","):
         classroom_name = classroom_name.strip()
 
-        if not classroom_name or classroom_name in classrooms_from_name:
+        if not classroom_name or (classrooms_from_name and classroom_name in classrooms_from_name):
             continue
 
         # TODO
