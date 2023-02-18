@@ -50,13 +50,6 @@ periods: List[dict] = [
         "short": "6",
         "starttime": "18:40",
         "endtime": "19:25"
-    },
-    {
-        "period": "7",
-        "name": "7",
-        "short": "7",
-        "starttime": "19:30",
-        "endtime": "20:15"
     }
 ]
 
