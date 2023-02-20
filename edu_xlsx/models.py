@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from pydantic.fields import FieldInfo, Field
 
 from .utils import generate_hex_color
 
@@ -16,6 +17,11 @@ TIMEOFF: List[List[List[str]]] = [
 ]
 
 
+generate_hex_color_field: FieldInfo = Field(
+    default_factory = generate_hex_color
+)
+
+
 class Class(BaseModel):
     id: str
     name: str
@@ -23,7 +29,7 @@ class Class(BaseModel):
     teacherid: Optional[str] = ""
     classroomids: Optional[List[str]] = []
     bell: Optional[str] = "0"
-    color: Optional[str] = generate_hex_color()
+    color: Optional[str] = generate_hex_color_field
     timeoff: Optional[T_TIMEOFF] = TIMEOFF
     printsubjectpictures: Optional[bool] = True
     classroomid: Optional[str] = None
@@ -33,7 +39,7 @@ class Subject(BaseModel):
     id: str
     name: str
     short: str
-    color: Optional[str] = generate_hex_color()
+    color: Optional[str] = generate_hex_color_field
     picture_url: Optional[str] = ""
     timeoff: Optional[T_TIMEOFF] = TIMEOFF
     contract_weight: Optional[int] = 1
@@ -46,7 +52,7 @@ class Classroom(BaseModel):
     buildingid: Optional[str] = ""
     sharedroom: Optional[bool] = False
     needssupervision: Optional[bool] = False
-    color: Optional[str] = generate_hex_color()
+    color: Optional[str] = generate_hex_color_field
     nearbyclassroomids: Optional[List[Any]] = []
 
 
@@ -59,7 +65,7 @@ class Teacher(BaseModel):
     namesuffix: Optional[str] = ""
     gender: Optional[str] = ""
     bell: Optional[str] = ""
-    color: Optional[str] = generate_hex_color()
+    color: Optional[str] = generate_hex_color_field
     fontcolorprint: Optional[str] = ""
     fontcolorprint2: Optional[str] = ""
     fontcolorscreen: Optional[str] = ""
@@ -75,7 +81,7 @@ class Group(BaseModel):
     divisionid: str
     okgroup: Optional[bool] = False
     students_count: Optional[Any] = None
-    color: Optional[str] = generate_hex_color()
+    color: Optional[str] = generate_hex_color_field
 
 
 class Lesson(BaseModel):

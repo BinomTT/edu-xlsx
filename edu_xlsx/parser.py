@@ -203,9 +203,11 @@ class XLSXParser:
                     classroom_names_str = str(classroom_names_str)
 
                     for classroom_name in parse_classroom_names(
-                        classroom_names_str = classroom_names_str,
-                        classrooms_from_name = self._classrooms_from_name
+                        classroom_names_str = classroom_names_str
                     ):
+                        if classroom_name in self._classrooms_from_name:
+                            continue
+
                         id = "*{}".format(i)
 
                         classroom: Classroom = Classroom(

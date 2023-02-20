@@ -132,7 +132,8 @@ def chunker(collection: List[Any], count: int) -> List[List[Any]]:
     ]
 
 
-def parse_classroom_names(classroom_names_str: str, classrooms_from_name: Optional[Dict[str, Any]]=None) -> List[str]: # TODO: replace `Any` with `models.Class`
+# TODO: replace `Any` argument with `models.Class`
+def parse_classroom_names(classroom_names_str: str) -> List[str]:
     if digit_6_re.match(
         string = classroom_names_str
     ):
@@ -148,16 +149,15 @@ def parse_classroom_names(classroom_names_str: str, classrooms_from_name: Option
     for classroom_name in classroom_names_str.split(","):
         classroom_name = classroom_name.strip()
 
-        if not classroom_name or (classrooms_from_name and classroom_name in classrooms_from_name):
+        if not classroom_name or (classroom_name in classroom_names):
             continue
 
-        # TODO
-        if classroom_name.lower()[-1] in ["a", "а"]:
+        classroom_name_lower: str = classroom_name.lower()
+
+        if "кітап" not in classroom_name_lower and classroom_name_lower[-1] in ["a", "а"]:
             classroom_name = classroom_name[:-1]
-        # if classroom_name[-2].isdigit() and classroom_name.lower()[-1] in ["a", "а"]:
-        #     classroom_name = classroom_name[:-1] + "-а"
-        # else:
-        if not ("С" in classroom_name and "Б" in classroom_name):
+
+        if not ("С" in classroom_name):
             classroom_name = classroom_name.split(" ", 1)[0]
 
         classroom_names.append(classroom_name)
