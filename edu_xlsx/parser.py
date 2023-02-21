@@ -174,9 +174,6 @@ class XLSXParser:
                     subject: Subject = Subject(
                         id = id,
                         name = subject_name,
-                        # short = get_short_first_chars(
-                        #     string = subject_name
-                        # )
                         short = subject_name
                     )
 
