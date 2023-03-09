@@ -18,7 +18,7 @@ ACCEPTABLE_TIMETABLE_NUMBERS: List[str] = [
 ]
 
 
-class XLSXParser:
+class TempXLSXParser:
     def __init__(self, xlsx_filepath: Union[str, Path], timetable_number: Union[int, str]) -> None:
         if not isinstance(xlsx_filepath, Path):
             xlsx_filepath = Path(xlsx_filepath)
@@ -36,19 +36,7 @@ class XLSXParser:
                 )
             )
 
-        if timetable_number not in ACCEPTABLE_TIMETABLE_NUMBERS:
-            raise ValueError(
-                "TimeTable number `{timetable_number}` must be {correct_values}!".format(
-                    timetable_number = timetable_number,
-                    correct_values = " or ".join(ACCEPTABLE_TIMETABLE_NUMBERS)
-                )
-            )
-
-        if timetable_number == ACCEPTABLE_TIMETABLE_NUMBERS[0]:
-            from .datas_1 import periods, daysdefs
-
-        elif timetable_number == ACCEPTABLE_TIMETABLE_NUMBERS[1]:
-            from .datas_2 import periods, daysdefs
+        from .datas_temp import periods, daysdefs
 
         self._periods: List[dict] = periods
         self._periods_len: int = len(self._periods)
@@ -77,7 +65,7 @@ class XLSXParser:
 
         i = 1
 
-        for _classes in self._sheet["A5:A{}".format(self._sheet_max_row)]:
+        for _classes in self._sheet["A9:A{}".format(self._sheet_max_row)]:
             for class_cell in _classes:
                 if not class_cell.value:
                     continue
@@ -143,12 +131,12 @@ class XLSXParser:
         }
 
         for i in range(0, len(self._classes)):
-            i_x: int = i * 4
+            i_x: int = i * 3
 
-            sheet_table_datas["subjects"].append(self._sheet["B{0}:{1}{0}".format(5 + i_x, self._sheet_max_column_letters)])
-            sheet_table_datas["classrooms"].append(self._sheet["B{0}:{1}{0}".format(7 + i_x, self._sheet_max_column_letters)])
-            sheet_table_datas["teachers"].append(self._sheet["B{0}:{1}{0}".format(8 + i_x, self._sheet_max_column_letters)])
-            sheet_table_datas["lessons"].append(self._sheet["B{0}:{1}{2}".format(5 + i_x, self._sheet_max_column_letters, 5 + i_x + 3)])
+            sheet_table_datas["subjects"].append(self._sheet["B{0}:{1}{0}".format(9 + i_x, self._sheet_max_column_letters)])
+            sheet_table_datas["classrooms"].append(self._sheet["B{0}:{1}{0}".format(10 + i_x, self._sheet_max_column_letters)])
+            sheet_table_datas["teachers"].append(self._sheet["B{0}:{1}{0}".format(11 + i_x, self._sheet_max_column_letters)])
+            sheet_table_datas["lessons"].append(self._sheet["B{0}:{1}{2}".format(9 + i_x, self._sheet_max_column_letters, 9 + i_x + 2)])
 
         self._subjects: List[Subject] = []
         self._subjects_from_id: Dict[str, Subject] = {}
@@ -261,7 +249,7 @@ class XLSXParser:
         i = 1
 
         for sheet_lessons_rows in sheet_table_datas["lessons"]:
-            for subject_cell, classes_cell, classrooms_cell, teachers_cell in zip(sheet_lessons_rows[0], sheet_lessons_rows[1], sheet_lessons_rows[2], sheet_lessons_rows[3]):
+            for subject_cell, classrooms_cell, teachers_cell in zip(sheet_lessons_rows[0], sheet_lessons_rows[1], sheet_lessons_rows[2]):
                 if not subject_cell.value:
                     continue
 
@@ -274,7 +262,7 @@ class XLSXParser:
 
                 id = "*{}".format(i)
 
-                classid: str = self._classes_from_name[classes_cell.value.split(",")[0].strip()].id
+                classid: str = self._classes_from_name[self._sheet["A{}".format(subject_cell.row)].value.split(",")[0].strip()].id
                 classroom_names_str: Union[str, int, None] = classrooms_cell.value
 
                 classroomids: List[str] = []

@@ -1,16 +1,22 @@
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
 
-from edu_xlsx import XLSXParser
 
+argument_parser: ArgumentParser = ArgumentParser()
+argument_parser.add_argument("input")
+argument_parser.add_argument("output")
+argument_parser.add_argument("--indent", default=None, type=int, required=False)
+argument_parser.add_argument("--use-temp", action="store_true", default=False)
 
-arguments_parser: ArgumentParser = ArgumentParser()
-arguments_parser.add_argument("input")
-arguments_parser.add_argument("output")
-arguments_parser.add_argument("--indent", default=None, type=int, required=False)
-
-arguments: Namespace = arguments_parser.parse_args()
+arguments: Namespace = argument_parser.parse_args()
 arguments.input = Path(arguments.input)
+arguments.output = Path(arguments.output)
+
+
+if arguments.use_temp:
+    from edu_xlsx import TempXLSXParser as XLSXParser
+else:
+    from edu_xlsx import XLSXParser
 
 
 print(
@@ -33,6 +39,6 @@ xlsx_parser.save(
 
 print(
     "Successfully saved to \"{json_filepath}\"!".format(
-        json_filepath = Path(arguments.output).resolve()
+        json_filepath = arguments.output.resolve()
     )
 )

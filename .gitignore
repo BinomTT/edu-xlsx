@@ -11,3 +11,5 @@ response*
 *.egg-info
 build/
 dist/
+*.xlsx
+*.json
