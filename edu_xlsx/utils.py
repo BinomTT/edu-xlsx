@@ -132,7 +132,6 @@ def chunker(collection: List[Any], count: int) -> List[List[Any]]:
     ]
 
 
-# TODO: replace `Any` argument with `models.Class`
 def parse_classroom_names(classroom_names_str: Union[str, int]) -> List[str]:
     if not classroom_names_str:
         classroom_names_str = ""

@@ -27,7 +27,7 @@ print(
 
 xlsx_parser: XLSXParser = XLSXParser(
     xlsx_filepath = arguments.input,
-    timetable_number = arguments.input.name.split(".")[0].split("_")[-1]
+    timetable_number = arguments.input.name.split(".")[-2].split("_")[-1]
 )
 
 xlsx_parser.parse()

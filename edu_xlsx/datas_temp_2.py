@@ -56,53 +56,32 @@ periods: List[dict] = [
 
 daysdefs: List[dict] = [
     {
+        "name": "Пятница",
+        "short": "Пт",
+        "days": "00001",
+        "typ": "one",
+        "val": 0
+    },
+    {
         "name": "Понедельник",
         "short": "Пн",
         "days": "10000",
         "typ": "one",
-        "val": 0
+        "val": 1
     },
     {
         "name": "Вторник",
         "short": "Вт",
         "days": "01000",
         "typ": "one",
-        "val": 1
+        "val": 2
     },
     {
         "name": "Среда",
         "short": "Ср",
         "days": "00100",
         "typ": "one",
-        "val": 2
-    },
-    {
-        "name": "Четверг",
-        "short": "Чт",
-        "days": "00010",
-        "typ": "one",
         "val": 3
-    },
-    {
-        "name": "Пятница",
-        "short": "Пт",
-        "days": "00001",
-        "typ": "one",
-        "val": 4
-    },
-    {
-        "name": "В любой день",
-        "short": "X",
-        "days": "10000,01000,00100,00010,00001",
-        "typ": "any",
-        "val": None
-    },
-    {
-        "name": "Каждый день",
-        "short": "E",
-        "days": "11111",
-        "typ": "all",
-        "val": None
     }
 ]
 

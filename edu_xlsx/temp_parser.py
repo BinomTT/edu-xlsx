@@ -36,11 +36,19 @@ class TempXLSXParser:
                 )
             )
 
-        from .datas_temp import periods, daysdefs
+        datas_temp = __import__(
+            "edu_xlsx.datas_temp_{timetable_number}".format(
+                timetable_number = timetable_number
+            ),
+            fromlist = [
+                "periods",
+                "daysdefs"
+            ]
+        )
 
-        self._periods: List[dict] = periods
+        self._periods: List[dict] = datas_temp.periods
         self._periods_len: int = len(self._periods)
-        self._daysdefs: List[dict] = daysdefs
+        self._daysdefs: List[dict] = datas_temp.daysdefs
         self._daysdefs_len: int = len(self._daysdefs)
 
         self._excel: Workbook = load_workbook(
@@ -373,7 +381,7 @@ class TempXLSXParser:
                                 "vals": daysdef["days"].split(","),
                                 "val": daysdef["val"]
                             }
-                            for i, daysdef in enumerate(self._daysdefs, 1)
+                            for i, daysdef in enumerate(self._daysdefs, 0)
                         ],"data_columns":["name","short","typ","vals","val"]},
                         {"id":"weeksdefs","def":{"id":"weeksdefs","name":"Недели","item_name":"Неделя","icon":"/static/pics/g_2_A.png"},"cdefs":[{"id":"name","type":"string","name":"Название"},{"id":"short","type":"string","name":"Сокращение"},{"id":"typ","type":"enum","name":"typ"},{"id":"vals","type":"stringarray","name":"vals"},{"id":"val","type":"int","name":"val"}],"data_rows":[{"id":"*1","name":"Неделя A","short":"A","typ":"one","vals":["1"],"val":0},{"id":"*2","name":"Любая неделя","short":"Любой","typ":"any","vals":["1"],"val":None},{"id":"*3","name":"Все недели","short":"Все","typ":"all","vals":["1"],"val":None}],"data_columns":["name","short","typ","vals","val"]},
                         {"id":"termsdefs","def":{"id":"termsdefs","name":"Семестры","item_name":"Семестр","icon":"/static/pics/b_2_A.png"},"cdefs":[{"id":"name","type":"string","name":"Название"},{"id":"short","type":"string","name":"Сокращение"},{"id":"typ","type":"enum","name":"typ"},{"id":"vals","type":"stringarray","name":"vals"},{"id":"val","type":"int","name":"val"}],"data_rows":[{"id":"*1","name":"Весь год","short":"Год","typ":"all","vals":["1"],"val":None}],"data_columns":["name","short","typ","vals","val"]},

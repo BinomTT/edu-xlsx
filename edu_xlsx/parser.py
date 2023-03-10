@@ -31,28 +31,32 @@ class XLSXParser:
 
         if not self.xlsx_filepath.exists() or not self.xlsx_filepath.is_file():
             raise ValueError(
-                "Input .XLSX `{xlsx_filepath}` must exists and be a file!".format(
-                    xlsx_filepath = xlsx_filepath
+                "Input .XLSX {xlsx_filepath!r} must exists and be a file!".format(
+                    xlsx_filepath = xlsx_filepath.resolve()
                 )
             )
 
         if timetable_number not in ACCEPTABLE_TIMETABLE_NUMBERS:
             raise ValueError(
-                "TimeTable number `{timetable_number}` must be {correct_values}!".format(
+                "Timetable number {timetable_number!r} must be {correct_values}!".format(
                     timetable_number = timetable_number,
                     correct_values = " or ".join(ACCEPTABLE_TIMETABLE_NUMBERS)
                 )
             )
 
-        if timetable_number == ACCEPTABLE_TIMETABLE_NUMBERS[0]:
-            from .datas_1 import periods, daysdefs
+        datas_temp = __import__(
+            "edu_xlsx.datas_{timetable_number}".format(
+                timetable_number = timetable_number
+            ),
+            fromlist = [
+                "periods",
+                "daysdefs"
+            ]
+        )
 
-        elif timetable_number == ACCEPTABLE_TIMETABLE_NUMBERS[1]:
-            from .datas_2 import periods, daysdefs
-
-        self._periods: List[dict] = periods
+        self._periods: List[dict] = datas_temp.periods
         self._periods_len: int = len(self._periods)
-        self._daysdefs: List[dict] = daysdefs
+        self._daysdefs: List[dict] = datas_temp.daysdefs
         self._daysdefs_len: int = len(self._daysdefs)
 
         self._excel: Workbook = load_workbook(
