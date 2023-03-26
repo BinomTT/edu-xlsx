@@ -14,7 +14,7 @@ arguments.output = Path(arguments.output)
 
 
 if arguments.use_temp:
-    from edu_xlsx import TempXLSXParser as XLSXParser
+    from edu_xlsx.temp_parser import TempXLSXParser as XLSXParser
 else:
     from edu_xlsx import XLSXParser
 

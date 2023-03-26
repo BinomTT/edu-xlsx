@@ -44,7 +44,7 @@ class XLSXParser:
                 )
             )
 
-        datas_temp = __import__(
+        datas_module = __import__(
             "edu_xlsx.datas_{timetable_number}".format(
                 timetable_number = timetable_number
             ),
@@ -54,9 +54,9 @@ class XLSXParser:
             ]
         )
 
-        self._periods: List[dict] = datas_temp.periods
+        self._periods: List[dict] = datas_module.periods
         self._periods_len: int = len(self._periods)
-        self._daysdefs: List[dict] = datas_temp.daysdefs
+        self._daysdefs: List[dict] = datas_module.daysdefs
         self._daysdefs_len: int = len(self._daysdefs)
 
         self._excel: Workbook = load_workbook(
