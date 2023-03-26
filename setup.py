@@ -5,6 +5,8 @@ from re import findall as re_findall, M as ReM
 import sys
 
 
+ENCODING = "utf-8"
+
 WORK_DIR = Path(__file__).parent
 
 PACKAGE_NAME = "edu_xlsx"
@@ -19,7 +21,7 @@ if sys.version_info < MINIMAL_PY_VERSION:
     )
 
 
-init_py_string = (WORK_DIR / PACKAGE_NAME / "__init__.py").read_text("utf-8")
+init_py_string = (WORK_DIR / PACKAGE_NAME / "__init__.py").read_text(ENCODING)
 
 
 setup(
@@ -31,6 +33,6 @@ setup(
     author_email = "arynyklas@gmail.com",
     packages = find_packages(),
     python_requires = ">=3.7",
-    install_requires = (WORK_DIR / "requirements.txt").read_text("utf-8").strip().split("\n"),
+    install_requires = (WORK_DIR / "requirements.txt").read_text(ENCODING).strip().split("\n"),
     include_package_data = False
 )

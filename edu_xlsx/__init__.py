@@ -1,4 +1,4 @@
 from .parser import XLSXParser
 
 
-__version__: str = "1.1.dev2"
+__version__ = "1.1.dev2"
